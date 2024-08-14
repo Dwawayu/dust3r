@@ -62,7 +62,7 @@ class DPTOutputAdapter_fix(DPTOutputAdapter):
         # Output head
         out = self.head(path_1)
 
-        return out
+        return out, path_1
 
 
 class PixelwiseTaskWithDPT(nn.Module):
@@ -87,9 +87,10 @@ class PixelwiseTaskWithDPT(nn.Module):
         self.dpt.init(**dpt_init_args)
 
     def forward(self, x, img_info):
-        out = self.dpt(x, image_size=(img_info[0], img_info[1]))
+        out, path_1 = self.dpt(x, image_size=(img_info[0], img_info[1]))
         if self.postprocess:
             out = self.postprocess(out, self.depth_mode, self.conf_mode)
+            out["path_1"] = path_1
         return out
 
 

@@ -65,7 +65,8 @@ def inference(pairs, model, device, batch_size=8, verbose=True):
 
     for i in tqdm.trange(0, len(pairs), batch_size, disable=not verbose):
         res = loss_of_one_batch(collate_with_cat(pairs[i:i + batch_size]), model, None, device)
-        result.append(to_cpu(res))
+        # result.append(to_cpu(res))
+        result.append(res)
 
     result = collate_with_cat(result, lists=multiple_shapes)
 
