@@ -50,7 +50,7 @@ def estimate_focal_knowing_depth(pts3d, pp, focal_mode='median', min_focal=0., m
             # print(dis.nanmean(-1))
             w = dis.clip(min=1e-8).reciprocal()
             # update the scaling with the new weights
-            focal = (w * dot_xy_px).mean(dim=1) / (w * dot_xy_xy).mean(dim=1)
+            focal = (w * dot_xy_px).mean(dim=1) / ((w * dot_xy_xy).mean(dim=1)+1e-5)
     else:
         raise ValueError(f'bad {focal_mode=}')
 
